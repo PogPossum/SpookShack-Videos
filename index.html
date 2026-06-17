@@ -27,7 +27,6 @@
     <main>
         <h2>You want horror? We got horror.</h2>
         
-        <!-- Search and Filter Controls -->
         <div class="search-container">
             <input type="text" id="movieSearch" placeholder="Search..." oninput="handleSearch()">
             <button id="clearBtn" onclick="resetView()" style="display:none;">Show All Movies</button>
@@ -36,25 +35,10 @@
         <div id="movieDisplay">
             <p class="loading">Waking up the database...</p>
         </div>
-
-        <div class="movie-card">
-            <div class="poster-wrapper">
-                <img src="posters/${Movies.MovieID}.jpg" onerror="this.src='posters/vhs-placeholder.png';" alt="${Movies.Title} Poster" class="movie-poster">
-            </div>
-            <div class="movie-info">
-                <h3>${Movies.Title}</h3>
-                <div class="movie-details">
-                    <p><strong>Released:</strong> ${Movies.Release}</p>
-                    <p><strong>Director:</strong> ${Movies.Director}</p>
-                    <p><strong>Genre:</strong> ${MovieGenres.GenreName}</p>
-                </div>
-            </div>
-        </div>
-
     </main>
 
     <script>
-        let allMovies = [];
+        let allMovies = []; // Global store for our original database data
 
         // 1. Fetch movies when the page loads
         async function fetchMovies() {
@@ -63,7 +47,11 @@
                 const result = await response.json();
                 
                 if (result.status === "SUCCESS") {
-                    allMovies = result.data;
+                    // Sort the array alphabetically by title right out of the box
+                    allMovies = result.data.sort((a, b) => {
+                        return a.title.localeCompare(b.title);
+                    });
+                    
                     displayStandardGrid(allMovies);
                 } else {
                     document.getElementById('movieDisplay').innerHTML = `<p style="color:var(--accent--color)">Error loading collection.</p>`;
@@ -86,13 +74,16 @@
             moviesList.forEach(movie => {
                 html += `
                     <div class="movie-card">
-                        <h3>${Movies.Title}</h3>
-                        <div class="movie-details">
-                            <p><strong>Released:</strong> ${Movies.Release}</p>
-                            <p><strong>Director:</strong> ${Movies.Director}</p>
-                            <p><strong>Monster/Threat:</strong> ${Movies.MovieMonster}</p>
-                            <p><strong>Genre:</strong> ${MovieGenres.GenreName}</p>
-                            <span class="badge">${Movies.CreatureFeature === 'Y' ? '🧬 Creature Feature' : '🎬 Standard'}</span>
+                        <div class="poster-wrapper">
+                            <img src="posters/${movie.movieid}.jpg" onerror="this.src='posters/vhs-placeholder.jpg';" alt="${movie.title} Poster" class="movie-poster">
+                        </div>
+                        <div class="movie-info">
+                            <h3>${movie.title}</h3>
+                            <div class="movie-details">
+                                <p><strong>Released:</strong> ${movie.release}</p>
+                                <p><strong>Director:</strong> ${movie.director}</p>
+                                <p><strong>Genre:</strong> ${movie.genrename}</p>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -101,24 +92,23 @@
             display.innerHTML = html;
         }
 
-        // 3. Search Filter Logic
+        // 3. Search Filter Logic (Matches Arcade Search)
         function handleSearch() {
             const searchVal = document.getElementById('movieSearch').value.toLowerCase();
             const filtered = allMovies.filter(movie => {
-                return Movies.Title.toLowerCase().includes(searchVal) || 
-                       Movies.Director.toLowerCase().includes(searchVal) ||
-                       Movies.MovieMonster.toLowerCase().includes(searchVal) ||
-                       MovieGenres.GenreName.toLowerCase().includes(searchVal);
+                return movie.title.toLowerCase().includes(searchVal) || 
+                       movie.director.toLowerCase().includes(searchVal) ||
+                       movie.moviemonster.toLowerCase().includes(searchVal) ||
+                       movie.genrename.toLowerCase().includes(searchVal);
             });
             displayStandardGrid(filtered);
         }
 
-        // 4. Categorized View
+        // 4. Categorized View (Group by genres, monsters, or directors)
         function filterByGroup(property) {
             document.getElementById('clearBtn').style.display = 'inline-block';
             const display = document.getElementById('movieDisplay');
             
-            // Group our array items by whatever column property was clicked
             const grouped = {};
             allMovies.forEach(movie => {
                 const key = movie[property] || "Unknown";
@@ -126,21 +116,28 @@
                 grouped[key].push(movie);
             });
 
-            // Build out a clean categorized shelf view
             let html = '<div class="category-view">';
             for (const [categoryName, movies] of Object.entries(grouped)) {
-                html += `<div class="category-block">
-                    <h2 class="category-title">${categoryName}</h2>
-                    <div class="movie-grid">`;
+                html += `
+                    <div class="category-block">
+                        <h2 class="category-title">${categoryName}</h2>
+                        <div class="movie-grid">`;
                 
+                // Grouped sub-lists inherit the original alphabetical sort order automatically
                 movies.forEach(movie => {
                     html += `
                         <div class="movie-card">
-                            <h3>${Movies.Title}</h3>
-                            <div class="movie-details">
-                                <p><strong>Director:</strong> ${Movies.Director}</p>
-                                <p><strong>Monster:</strong> ${Movies.MovieMonster}</p>
-                                <p><strong>Genre:</strong> ${MovieGenre.GenreName}</p>
+                            <div class="poster-wrapper">
+                                <img src="posters/${movie.movieid}.jpg" onerror="this.src='posters/vhs-placeholder.jpg';" alt="${movie.title} Poster" class="movie-poster">
+                            </div>
+                            <div class="movie-info">
+                                <h3>${movie.title}</h3>
+                                <div class="movie-details">
+                                    <p><strong>Released:</strong> ${movie.release}</p>
+                                    <p><strong>Director:</strong> ${movie.director}</p>
+                                    <p><strong>Monster:</strong> ${movie.moviemonster}</p>
+                                    <p><strong>Genre:</strong> ${movie.genrename}</p>
+                                </div>
                             </div>
                         </div>
                     `;
