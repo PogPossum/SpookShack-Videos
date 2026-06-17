@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+
+:root {
+    --primary-color: #11121a;
+    --secondary-color: #2c2f30;
+    --text-color: #f6f6f6;
+    --accent--color: #b10606;
+}
+
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+  
+h1 {
+    font-size: 4rem;
+}
+  
+h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+
+/* --- neon header ---*/
+
+.neonText {
+
+  color: hsl(0, 0%, 100%);
+  text-shadow:
+      0 0 7px #fff,
+      0 0 10px #b10606,
+      0 0 21px #b10606,
+      0 0 42px #b60404,
+      0 0 82px #b60404,
+      0 0 92px #b60404,
+      0 0 102px #840000,
+      0 0 151px #840000;
+}
+  
+.container {
+    margin-top: 0;
+}
+
+body {
+    font-size: 18px;
+    font-family: "Rubik Glitch", system-ui;
+    background-color: var(--primary-color);
+    justify-content: center;
+}  
+
+main{
+    padding: min(5em, 7%);
+}
+main p{
+    margin-top: .35em;
+}
+
+/* --- nav bar --- */
+nav{
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--hover-color);
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+nav li{
+    display: flex;
+}
+nav a{
+    display: flex;
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 1em 2em;
+}
+nav a:hover{
+    background-color: var(--accent--color);
+}
+
+/* --- Search & Controls Layout --- */
+.search-container {
+    margin: 1.5rem 0;
+    display: flex;
+    gap: 1rem;
+}
+
+#movieSearch {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.5em 1em;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--accent--color);
+    color: var(--text-color);
+    border-radius: 4px;
+    width: 100%;
+    max-width: 400px;
+}
+
+#movieSearch:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--accent--color);
+}
+
+#clearBtn {
+    font-family: inherit;
+    background-color: var(--accent--color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#clearBtn:hover {
+    filter: brightness(1.2);
+}
+
+/* --- Movie Grid & Interactive Cards --- */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.movie-card {
+    background-color: var(--secondary-color);
+    border: 2px solid #222;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.2s speed, box-shadow 0.2s;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(177, 6, 6, 0.4);
+    border-color: var(--accent--color);
+}
+
+.movie-card h3 {
+    margin-top: 0;
+    color: var(--text-color);
+    font-size: 1.4rem;
+    border-bottom: 2px solid var(--accent--color);
+    padding-bottom: 0.5rem;
+}
+
+.movie-details p {
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+    font-family: system-ui, -apple-system, sans-serif; /* Changes body text within card to a readable clean font */
+}
+
+.badge {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    font-family: system-ui;
+    background: #111;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid #333;
+}
+
+/* --- Category block headers --- */
+.category-block {
+    margin-bottom: 3rem;
+    border-left: 4px solid var(--accent--color);
+    padding-left: 1rem;
+}
+
+.category-title {
+    text-transform: uppercase;
+    color: var(--text-color);
+    margin-bottom: 0;
+}
