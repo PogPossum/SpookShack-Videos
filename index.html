@@ -1,0 +1,31 @@
+        <ul>
+            <li><a href="#" onclick="filterByGroup('GenreName')">Genres</a></li>
+            <li><a href="#" onclick="filterByGroup('MovieMonster')">Monsters</a></li>
+            <li><a href="#" onclick="filterByGroup('Director')">Directors</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>You want horror? We got horror.</h2>
+
+        <!-- Search and Filter Controls -->
+        <div class="search-container">
+            <input type="text" id="movieSearch" placeholder="Search..." oninput="handleSearch()">
+            <button id="clearBtn" onclick="resetView()" style="display:none;">Show All Movies</button>
+        </div>
+
+        <!-- This is where our javascript will inject our data cards -->
+        <div id="movieDisplay">
+            <p class="loading">Waking up the database...</p>
+        </div>
+
+
+    </main>
+
+    <script>
+    </script>
+    </main>
+
+</body>
+</html>
+
