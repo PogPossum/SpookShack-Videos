@@ -1,164 +1,203 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpookShack Videos</title>
-    <link rel="icon" href="/ardnscr-logo.ico">
-    <link rel="stylesheet" href="style.css">
+:root {
+    --primary-color: #11121a;
+    --secondary-color: #2c2f30;
+    --text-color: #f6f6f6;
+    --accent--color: #b10606;
+}
 
-</head>
-<body>
-    <div class="container"> 
-        <h1 class="neonText">SpookShack </h1>
-        <h1 class="neonText">Videos</1>
-    </div>
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 4rem;
+    animation: pulsate 1.89s infinite alternate;
+}
+  
+h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
 
-    <main>
-        <nav id="SiteNav">
-        <ul>
-            <li><a href="#" onclick="filterByGroup('GenreName')">Genres</a></li>
-            <li><a href="#" onclick="filterByGroup('MovieMonster')">Monsters</a></li>
-            <li><a href="#" onclick="filterByGroup('Director')">Directors</a></li>
-        </ul>
-    </nav>
+p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
 
-    <main>
-        <h2>You want horror? We got horror.</h2>
-        
-        <div class="search-container">
-            <input type="text" id="movieSearch" placeholder="Search..." oninput="handleSearch()">
-            <button id="clearBtn" onclick="resetView()" style="display:none;">Show All Movies</button>
-        </div>
 
-        <div id="movieDisplay">
-            <p class="loading">Waking up the database...</p>
-        </div>
-    </main>
+/* --- neon header ---*/
 
-    <script>
-        let allMovies = []; // Global store for our original database data
+.neonText {
 
-        // 1. Fetch movies when the page loads
-        async function fetchMovies() {
-            try {
-                const response = await fetch('/api/movies');
-                const result = await response.json();
-                
-                if (result.status === "SUCCESS") {
-                    // Sort the array alphabetically by title right out of the box
-                    allMovies = result.data.sort((a, b) => {
-                        return a.title.localeCompare(b.title);
-                    });
-                    
-                    displayStandardGrid(allMovies);
-                } else {
-                    document.getElementById('movieDisplay').innerHTML = `<p style="color:var(--accent--color)">Error loading collection.</p>`;
-                }
-            } catch (error) {
-                console.error("Failed to fetch movies:", error);
-                document.getElementById('movieDisplay').innerHTML = `<p style="color:var(--accent--color)">Could not connect to backend.</p>`;
-            }
-        }
+  color: hsl(0, 0%, 100%);
+  text-shadow:
+      0 0 7px #fff,
+      0 0 10px #b10606,
+      0 0 21px #b10606,
+      0 0 42px #b60404,
+      0 0 82px #b60404,
+      0 0 92px #b60404,
+      0 0 102px #840000,
+      0 0 151px #840000;
+}
+  
+.container {
+    margin-top: 0;
+}
 
-        // 2. Render Standard Main Grid View
-        function displayStandardGrid(moviesList) {
-            const display = document.getElementById('movieDisplay');
-            if (moviesList.length === 0) {
-                display.innerHTML = `<p>No matching horror relics found.</p>`;
-                return;
-            }
+/* --- body --- */
+body {
+    font-size: 18px;
+    font-family: "Rubik Glitch", system-ui;
+    background-color: var(--primary-color);
+    justify-content: center;
+}
 
-            let html = '<div class="movie-grid">';
-            moviesList.forEach(movie => {
-                html += `
-                    <div class="movie-card">
-                        <div class="poster-wrapper">
-                            <img src="posters/${movie.movieid}.jpg" onerror="this.src='posters/vhs-placeholder.jpg';" alt="${movie.title} Poster" class="movie-poster">
-                        </div>
-                        <div class="movie-info">
-                            <h3>${movie.title}</h3>
-                            <div class="movie-details">
-                                <p><strong>Released:</strong> ${movie.release}</p>
-                                <p><strong>Director:</strong> ${movie.director}</p>
-                                <p><strong>Genre:</strong> ${movie.genrename}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            html += '</div>';
-            display.innerHTML = html;
-        }
+/* --- main --- */
+main{
+    padding: min(5em, 7%);
+}
+main p{
+    margin-top: .35em;
+}
 
-        // 3. Search Filter Logic (Matches Arcade Search)
-        function handleSearch() {
-            const searchVal = document.getElementById('movieSearch').value.toLowerCase();
-            const filtered = allMovies.filter(movie => {
-                return movie.title.toLowerCase().includes(searchVal) || 
-                       movie.director.toLowerCase().includes(searchVal) ||
-                       movie.moviemonster.toLowerCase().includes(searchVal) ||
-                       movie.genrename.toLowerCase().includes(searchVal);
-            });
-            displayStandardGrid(filtered);
-        }
+/* --- nav bar --- */
+nav{
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--hover-color);
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+nav li{
+    display: flex;
+}
+nav a {
+    display: flex;
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 0.75em 1.5rem;
+}
+nav a:hover{
+    background-color: var(--accent--color);
+}
 
-        // 4. Categorized View (Group by genres, monsters, or directors)
-        function filterByGroup(property) {
-            document.getElementById('clearBtn').style.display = 'inline-block';
-            const display = document.getElementById('movieDisplay');
-            
-            const grouped = {};
-            allMovies.forEach(movie => {
-                const key = movie[property] || "Unknown";
-                if (!grouped[key]) grouped[key] = [];
-                grouped[key].push(movie);
-            });
+/* --- Search & Controls Layout --- */
+.search-container {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+}
 
-            let html = '<div class="category-view">';
-            for (const [categoryName, movies] of Object.entries(grouped)) {
-                html += `
-                    <div class="category-block">
-                        <h2 class="category-title">${categoryName}</h2>
-                        <div class="movie-grid">`;
-                
-                // Grouped sub-lists inherit the original alphabetical sort order automatically
-                movies.forEach(movie => {
-                    html += `
-                        <div class="movie-card">
-                            <div class="poster-wrapper">
-                                <img src="posters/${movie.movieid}.jpg" onerror="this.src='posters/vhs-placeholder.jpg';" alt="${movie.title} Poster" class="movie-poster">
-                            </div>
-                            <div class="movie-info">
-                                <h3>${movie.title}</h3>
-                                <div class="movie-details">
-                                    <p><strong>Released:</strong> ${movie.release}</p>
-                                    <p><strong>Director:</strong> ${movie.director}</p>
-                                    <p><strong>Monster:</strong> ${movie.moviemonster}</p>
-                                    <p><strong>Genre:</strong> ${movie.genrename}</p>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-                html += `</div></div>`;
-            }
-            html += '</div>';
-            display.innerHTML = html;
-        }
+#movieSearch {
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    padding: 0.6em 1em;
+    background-color: #0c0d12;
+    border: 1px solid #333;
+    color: var(--text-color);
+    border-radius: 4px;
+    width: 100%;
+    max-width: 350px;
+}
 
-        // 5. Reset to original frontpage list view
-        function resetView() {
-            document.getElementById('movieSearch').value = '';
-            document.getElementById('clearBtn').style.display = 'none';
-            displayStandardGrid(allMovies);
-        }
+#movieSearch:focus {
+    outline: none;
+    border-color: var(--accent--color);
+    box-shadow: 0 0 8px var(--accent--color);
+}
 
-        // Boot everything up
-        fetchMovies();
-    </script>
-    </main>
+/* --- movie grid --- */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Adaptive card columns */
+    gap: 1.5rem;
+}
 
-</body>
-</html>
+.movie-card {
+    background-color: var(--secondary-color);
+    border: 1px solid #252838;
+    border-radius: 6px;
+    overflow: hidden; /* Ensures poster corners blend perfectly into the rounded card */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+}
+
+.movie-card:hover {
+    transform: scale(1.04); /* Netflix card hover zoom effect */
+    box-shadow: 0 10px 20px rgba(177, 6, 6, 0.5);
+    border-color: var(--accent--color);
+}
+
+/* --- posters --- */
+.poster-wrapper {
+    width: 100%;
+    aspect-ratio: 2 / 3; 
+    background-color: #0b0c10;
+    overflow: hidden;
+}
+
+.movie-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.movie-info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.movie-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-family: system-ui, sans-serif; /* Changes title to clean readable variant within streaming cards */
+}
+
+.movie-details p {
+    font-size: 0.85rem;
+    margin: 0.25rem 0;
+    font-family: system-ui, sans-serif;
+    color: #b0b3c6;
+}
+
+.badge {
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: auto; /* Pushes badges to the absolute bottom of the metadata container */
+    font-size: 0.75rem;
+    font-family: system-ui;
+    background: #111;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #ff4d4d;
+}
+
+
+@keyframes pulsate {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    /* Larger blur radius */
+    text-shadow:
+      0 0 4px #fff,
+      0 0 12px #b10606,
+      0 0 22px #b10606,
+      0 0 40px #b60404,
+      0 0 80px #b60404,
+      0 0 100px #b60404,
+      0 0 120px #840000,
+      0 0 150px #840000;
+  }
+ 20%, 24%, 55% {        
+      text-shadow: none;
+  }
+}
