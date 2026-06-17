@@ -1,3 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpookShack Videos</title>
+    <link rel="icon" href="/ardnscr-logo.ico">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="container"> 
+        <h1 class="neonText">SpookShack </h1>
+        <h1 class="neonText">Videos</1>
+    </div>
+
+    <main>
+        <nav id="SiteNav">
         <ul>
             <li><a href="#" onclick="filterByGroup('GenreName')">Genres</a></li>
             <li><a href="#" onclick="filterByGroup('MovieMonster')">Monsters</a></li>
@@ -7,18 +26,12 @@
 
     <main>
         <h2>You want horror? We got horror.</h2>
-
+        
         <!-- Search and Filter Controls -->
         <div class="search-container">
             <input type="text" id="movieSearch" placeholder="Search..." oninput="handleSearch()">
             <button id="clearBtn" onclick="resetView()" style="display:none;">Show All Movies</button>
         </div>
-
-        <!-- This is where our javascript will inject our data cards -->
-        <div id="movieDisplay">
-            <p class="loading">Waking up the database...</p>
-        </div>
-
 
     </main>
 
@@ -28,4 +41,3 @@
 
 </body>
 </html>
-
