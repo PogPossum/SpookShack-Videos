@@ -11,8 +11,10 @@
 </head>
 <body>
     <div class="container"> 
-        <h1 class="neonText">SpookShack </h1>
-        <h1 class="neonText">Videos</h1>
+        <a href="#" onclick="resetView(); return false;" class="header-link">
+            <h1 class="neonText">SpookShack </h1>
+            <h1 class="neonText">Videos</h1>
+        </a>
     </div>
 
     <main>
@@ -23,8 +25,6 @@
             <li><a href="#" onclick="filterByGroup('Director')">Directors</a></li>
         </ul>
     </nav>
-
-    <main>
         <h2>You want horror? We got horror.</h2>
         
         <div class="search-container">
@@ -40,14 +40,14 @@
     <script>
         let allMovies = []; // Global store for our original database data
 
-        // 1. Fetch movies when the page loads
+        // Fetch movies when the page loads
         async function fetchMovies() {
             try {
                 const response = await fetch('/api/movies');
                 const result = await response.json();
                 
                 if (result.status === "SUCCESS") {
-                    // Sort the array alphabetically by title right out of the box
+                    // Sort alphabetically by title
                     allMovies = result.data.sort((a, b) => {
                         return a.title.localeCompare(b.title);
                     });
@@ -62,7 +62,7 @@
             }
         }
 
-        // 2. Render Standard Main Grid View
+        // Render Standard Main Grid View
         function displayStandardGrid(moviesList) {
             const display = document.getElementById('movieDisplay');
             if (moviesList.length === 0) {
@@ -92,7 +92,7 @@
             display.innerHTML = html;
         }
 
-        // 3. Search Filter Logic (Matches Arcade Search)
+        // Search Filter Logic (Matches Arcade Search)
         function handleSearch() {
             const searchVal = document.getElementById('movieSearch').value.toLowerCase();
             const filtered = allMovies.filter(movie => {
@@ -104,7 +104,7 @@
             displayStandardGrid(filtered);
         }
 
-        // 4. Categorized View (Group by genres, monsters, or directors)
+        // Categorized View (Group by genres, monsters, or directors)
         function filterByGroup(property) {
             document.getElementById('clearBtn').style.display = 'inline-block';
             const display = document.getElementById('movieDisplay');
@@ -148,7 +148,7 @@
             display.innerHTML = html;
         }
 
-        // 5. Reset to original frontpage list view
+        // Reset to original frontpage list view
         function resetView() {
             document.getElementById('movieSearch').value = '';
             document.getElementById('clearBtn').style.display = 'none';
