@@ -278,7 +278,7 @@ values
 (68, 16), (68, 19),
 -- 69: White Noise (Supernatural, Thriller)
 (69, 16), (69, 19),
--- 61: Evil Dead 2 (Supernatural, Comedy)
+-- 70: Evil Dead 2 (Supernatural, Comedy)
 (70, 16), (70, 4);
 
 ------------ ------------ ------------
