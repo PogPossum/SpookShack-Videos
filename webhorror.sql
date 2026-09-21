@@ -49,8 +49,8 @@ values
 (5, 'Alien vs Predator', 'Paul W.S. Anderson', 2004, 'Aliens', 'y'),
 (6, 'Alien vs Predator 2', 'the Brothers Strause', 2007, 'Aliens', 'y'),
 (7, 'The Thing', 'John Carpenter', 1982, 'Aliens', 'y'),
-(8, 'War of the Worlds', 'Steven Spielberg', 2005, 'Aliens', 'y'),
-(9, 'War of the Worlds', 'Byron Haskin', 1953, 'Aliens', 'y'),
+(8, 'War of the Worlds', 'Byron Haskin', 1953, 'Aliens', 'y'),
+(9, 'War of the Worlds', 'Steven Spielberg', 2005, 'Aliens', 'y'),
 (10, 'Braindead', 'Peter Jackson', 1992, 'Zombies', 'y'),
 (11, 'Shaun of the Dead', 'Edgar Wright', 2004, 'Zombies', 'y'),
 (12, 'The Texas Chainsaw Massacre', 'Tobe Hooper', 1974, 'Humans', 'n'),
@@ -154,10 +154,10 @@ values
 (6, 13), (6, 1),
 -- 7: The Thing (Sci-fi, Body Horror)
 (7, 13), (7, 2),
--- 8: War of the Worlds 2005 (Sci-fi, Thriller)
-(8, 13), (8, 19),
--- 9: War of the Worlds 1953 (Sci-fi, Action)
-(9, 13), (9, 1),
+-- 8: War of the Worlds 1953 (Sci-fi, Action)
+(8, 13), (8, 1),
+-- 9: War of the Worlds 2005 (Sci-fi, Thriller)
+(9, 13), (9, 19),
 -- 10: Braindead (Splatter, Comedy)
 (10, 15), (10, 4),
 -- 11: Shaun of the Dead (Comedy, Splatter)
