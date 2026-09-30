@@ -67,6 +67,7 @@ Frankenstein, Marcus Nispel, 2004, Thriller, Sci-fi, Frankenstein's Monster, Yes
 The Sin Eater, Brian Helgeland, 2003, Supernatural, Mystery, Sin Eater, No
 Summer of Fear, Wes Craven, 1978, Supernatural, Thriller, Witch, No
 White Noise, Geoffrey Sax, 2005, Supernatural, Thriller, Ghosts, No
+Evil Dead 2, Sam Raimi, 1987, Demons, yes
 
 ------------ ------------ ------------
              -- genres -- 
